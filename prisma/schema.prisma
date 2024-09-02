@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  user_uuid String   @unique @default(uuid()) // Added uuid column
+  email     String   @unique
+  username  String   @unique
+  Firstname String
+  Lastname  String
+  password  String
+  image     String?
+  role      String   @default("member")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model License_type {
+  id              Int    @id @default(autoincrement())
+  license_type_id Int    @unique
+  license_name    String @unique
+}
+
+model License_data {
+  id              Int      @id @default(autoincrement())
+  user_uuid       String
+  license_type_id Int
+  expiry_date     DateTime
+  image_url       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  
+}
